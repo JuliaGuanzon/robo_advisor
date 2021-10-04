@@ -36,19 +36,18 @@ def validate_data(age, investment_amount,intent_request):
             return build_validation_result(
                 False,
                 "age",
-                "You should be older than 0 and younger than 65."
+                "Great! You're eligible for investing. Please provide an amount you'd like to invest."
             )
-    
-    if investment_amount is None:
-        investment_amount = parse_int(
-            investment_amount
-        )
-        if investment_amount <= 5000:
-            return build_validation_result(
-                False,
-                "investmentAmount",
-                "We can only provide investment advice for amounts $5,000 and higher."
+        if investment_amount is None:
+            investment_amount = parse_int(
+                investment_amount
             )
+            if investment_amount <= 5000:
+                return build_validation_result(
+                    False,
+                    "investmentAmount",
+                    "We can only provide investment advice for amounts $5,000 and higher."
+                )
 
     return build_validation_result(True, None, None)
 
@@ -150,8 +149,6 @@ def recommend_portfolio(intent_request):
     risk_level = get_slots(intent_request)["riskLevel"]
     source = intent_request["invocationSource"]
     
-    
-
     if source == "DialogCodeHook":
         # This code performs basic validation on the supplied input slots.
 
@@ -229,7 +226,3 @@ def lambda_handler(event, context):
     """
 
     return dispatch(event)
-
-
-
-        
